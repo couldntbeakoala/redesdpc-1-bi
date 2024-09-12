@@ -18,5 +18,5 @@ Na pasta `Códigos`, há os scripts fornecidos pelo professor:
 
 ## Estrutura
 
-- `Passo-a-Passo.md` - Guia detalhado do trabalho.
+- `Passo-a-Passo.md` - Guia detalhado do passo a passo.
 - `Códigos/` - Pasta contendo os códigos fornecidos pelo professor.
