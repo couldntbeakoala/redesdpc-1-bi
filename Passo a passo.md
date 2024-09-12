@@ -602,5 +602,6 @@ Para filtrar a captura a fim de visualizar somente o que interessa, vá para o c
 ## Referências
 - [Instalação do VSCode](https://code.visualstudio.com/docs/setup/setup-overview)
 - [Instalação do Python](https://www.python.org/downloads/)
+    - [Programação de Soquetes (Python)](https://docs.python.org/pt-br/3/howto/sockets.html) & [Biblioteca Socket (Python)](https://docs.python.org/3/library/socket.html)
 - [Instalação do VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [Wireshark: Como usar e filtrar pacotes](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html)
