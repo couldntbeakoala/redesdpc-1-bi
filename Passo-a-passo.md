@@ -558,8 +558,9 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ### 3.2. Análise dos Pacotes
 
-Para filtrar a captura a fim de visualizar somente o que interessa, vá para o campo de filtro e digite:
+- Para filtrar a captura a fim de visualizar somente o que interessa, vá para o campo de filtro e digite:
     - Para filtrar somente protocolos _DNS_: `dns`
+          - Consulta e resposta: vá ao campo **Domain Name System (query)** (consulta) / **Domain Name System (response)** (resposta), no campo `Queries`, em seguida `Name`: haverá a "URL" do site.
     - Para filtrar somente protocolos _TCP_ e _UDP_ na porta especificda: `tcp.port == PORT || udp.port == PORT` (sendo `PORT` a porta do servidor)
     - Para filtrar somente os endereços _IP_: `ip.addr == IP || ip.addr == IP` (sendo `IP`s, respectivamente, os IPs do cliente e servidor ou vice-versa)
 
@@ -590,11 +591,10 @@ Para filtrar a captura a fim de visualizar somente o que interessa, vá para o c
 #### 3.3.4. Tamanho do Pacote
 
 - Há duas formas de visualizar o tamanho do pacote:
-    - Ele é diretamente informado em tamanho completo no cabeçalho IP no campo `Total Length`.
-    - Pode ser calculado pela soma do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
+    - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
         - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) / `Length` (UDP)  para o tamanho do cabeçalho do protocolo.
         - A carga útil está localizada no cabeçalho **Data** no campo `payload`.
-    - Pode ser calculado pela subtração do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length` (TCP) / `Length` (UDP), em _bytes_:
+    - Pode ser calculado pela _subtração_ do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length` (TCP) / `Length` (UDP), em _bytes_:
         - Vá ao cabeçalho **Internet Protocol Version 4**, campo `Total length` para o tamanho total.
         - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length` (TCP) / `Length` (UDP) no cabeçalho respectivo do protocolo.
       Isto porque é em segmento, dos dados (`payload`) ao fim do pacote completo (`Frame`), o comprimento de cada camada é a soma do comprimento da anterior com o seu próprio.
