@@ -4,7 +4,7 @@ Repositório do projeto da matéria de Redes de Computadores para o 1º Bimestre
 
 ## Guia Passo a Passo
 
-Clique [aqui](Passo-a-Passo.md) para acessar o guia detalhado, ou consulte `Passo-a-Passo.md`, pois o arquivo está disponível neste repositório.
+Clique [aqui](https://github.com/couldntbeakoala/redesdpc-1-bi/blob/main/Passo-a-passo.md) para acessar o guia detalhado, ou consulte `Passo-a-Passo.md`, pois o arquivo está disponível neste repositório.
 
 ## Códigos
 
