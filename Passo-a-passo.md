@@ -545,9 +545,25 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ---
 
-## 3. Análise de Pacotes com Wireshark
+## 3. Execução dos Scripts
 
-### 3.1. Captura de Tráfego
+**Na máquina local (Windows):**
+
+1. Abra a pasta onde os _scripts_ foram salvos, copie seu caminho ("URL" do local).
+2. Abra o _terminal_ (`cmd`) e direcione-o para a pasta com: `cd {caminho-da-pasta}`
+3. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
+
+**Na máquina virtual (Kali Linux):**
+
+1. Abra a pasta onde os _scripts_ foram salvos.
+2. Clique com o botão direito em um espaço vazio dentro da pasta e selecione `Open Terminal Here`.
+2. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
+
+---
+
+## 4. Análise de Pacotes com Wireshark
+
+### 4.1. Captura de Tráfego
 
 **Na máquina local:**
 
@@ -556,7 +572,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 3. Execute os _scripts_ de cliente e servidor (primeiro inicie o servidor, depois o cliente).
 4. Pare a captura após a comunicação finalizar.
 
-### 3.2. Análise dos Pacotes
+### 4.2. Análise dos Pacotes
 
 - Para filtrar a captura a fim de visualizar somente o que interessa, vá para o campo de filtro e digite:
     - Para filtrar somente protocolos _DNS_: `dns`
@@ -564,9 +580,9 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
     - Para filtrar somente protocolos _TCP_ e _UDP_ na porta especificda: `tcp.port == PORT || udp.port == PORT` (sendo `PORT` a porta do servidor)
     - Para filtrar somente os endereços _IP_: `ip.addr == IP || ip.addr == IP` (sendo `IP`s, respectivamente, os IPs do cliente e servidor ou vice-versa)
 
-### 3.3. Informações dos Pacotes
+### 4.3. Informações dos Pacotes
 
-#### 3.3.1. IP de Origem e Destino
+#### 4.3.1. IP de Origem e Destino
 
 - Em detalhes do pacote, expanda o cabeçalho IP: **Internet Protocol Version 4**.
     - No campo `Source Address` (endereço de origem) está o IP de origem em relação ao tráfego.
@@ -574,13 +590,13 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
     - No campo `Destination Address` (endereço de destino) está o IP de destino em relação ao tráfego.
         - Ou na mesma linha logo após de `Dst:`
 
-#### 3.3.2. Protocolo Utilizado
+#### 4.3.2. Protocolo Utilizado
 
 - Em detalhes de cada pacote há uma lista com cabeçalhos. Logo após o cabeçalho IP está o cabeçalho da camada de transporte referente ao pacote:
     - `Transmission Control Protocol` (TCP).
     - `User Datagram Protocol` (UDP).
 
-#### 3.3.3. Porta de Origem e Destino
+#### 4.3.3. Porta de Origem e Destino
 
 - Em detalhes do pacote, expanda o cabeçalho da camada de transporte (TCP/UDP): **Transmission Control Protocol**/**User Datagram Protocol**.
     - No campo `Source Port` (porta de origem) está a porta de origem em relação ao tráfego.
@@ -588,7 +604,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
     - No campo `Destination Port` (porta de destino) está a porta de destino em relação ao tráfego.
         - Ou na mesma linha logo após de `Dst Port:`
 
-#### 3.3.4. Tamanho do Pacote
+#### 4.3.4. Tamanho do Pacote
 
 - Há duas formas de visualizar o tamanho do pacote:
     - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
