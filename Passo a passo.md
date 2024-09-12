@@ -591,13 +591,13 @@ Para filtrar a captura a fim de visualizar somente o que interessa, vá para o c
 
 - Há duas formas de visualizar o tamanho do pacote:
     - Ele é diretamente informado em tamanho completo no cabeçalho IP no campo `Total Length`.
-    - Pode ser calculado pela soma do tamanho do cabeçalho do protocolo (`Header length`) com a carga útil (`payload`), em _bytes_:
-        - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length`/`Length` (acima de `Flags`) para o tamanho do cabeçalho do protocolo.
+    - Pode ser calculado pela soma do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
+        - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) / `Length` (UDP)  para o tamanho do cabeçalho do protocolo.
         - A carga útil está localizada no cabeçalho **Data** no campo `payload`.
-    - Pode ser calculado pela subtração do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`)), em _bytes_:
+    - Pode ser calculado pela subtração do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length` (TCP) / `Length` (UDP), em _bytes_:
         - Vá ao cabeçalho **Internet Protocol Version 4**, campo `Total length` para o tamanho total.
-        - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length`.
-        - Isto porque é em segmento, dos dados (`payload`) ao fim do pacote completo (`Frame`), cada camada é a soma do comprimento da anterior com o dela mesma.
+        - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length` (TCP) / `Length` (UDP) no cabeçalho respectivo do protocolo.
+      Isto porque é em segmento, dos dados (`payload`) ao fim do pacote completo (`Frame`), o comprimento de cada camada é a soma do comprimento da anterior com o seu próprio.
 
 ## Referências
 - [Instalação do VSCode](https://code.visualstudio.com/docs/setup/setup-overview)
