@@ -80,6 +80,8 @@ python --version
 
 ### 1.4. Instalação do Wireshark
 
+Porque não será utilizado o **Wireshark** pela máquina local, devido a problemas de análise de tráfego em rede no sistema _Windows_, **não há necessidade de instalá-lo**, uma vez que já consta integrado na máquina virtual _Kali Linux_. Porém, **se quiser** instalá-lo:
+
 1. Acesse [https://www.wireshark.org](https://www.wireshark.org).
 2. Baixe e instale a versão mais recente do Wireshark.
 
