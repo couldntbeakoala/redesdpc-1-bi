@@ -552,12 +552,16 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 1. Abra a pasta onde os _scripts_ foram salvos, copie seu caminho ("URL" do local).
 2. Abra o _terminal_ (`cmd`) e direcione-o para a pasta com: `cd {caminho-da-pasta}`
 3. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
+   - No caso do _Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python UDPPingerClient.py {HOSTIP} {HOSTPORT}`
+   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o IP (`host = argv[1]`) seguido da porta (`port = argv[2]`).
 
 **Na máquina virtual (Kali Linux):**
 
 1. Abra a pasta onde os _scripts_ foram salvos.
 2. Clique com o botão direito em um espaço vazio dentro da pasta e selecione `Open Terminal Here`.
 2. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
+   - No caso do _Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python UDPPingerClient.py {HOSTIP} {HOSTPORT}`
+   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o IP (`host = argv[1]`) seguido da porta (`port = argv[2]`).
 
 ---
 
