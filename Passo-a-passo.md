@@ -576,7 +576,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 - Para filtrar a captura a fim de visualizar somente o que interessa, vá para o campo de filtro e digite:
     - Para filtrar somente protocolos _DNS_: `dns`
-          - Consulta e resposta: vá ao campo **Domain Name System (query)** (consulta) / **Domain Name System (response)** (resposta), no campo `Queries`, em seguida `Name`: haverá a "URL" do site.
+          - Consulta e resposta: vá ao campo **Domain Name System (query)** (consulta) / **Domain Name System (response)** (resposta), no campo `Queries`, em seguida terá um campo neste formato: `{URL do site}: type {tipo}, class {classe}`.
     - Para filtrar somente protocolos _TCP_ e _UDP_ na porta especificda: `tcp.port == PORT || udp.port == PORT` (sendo `PORT` a porta do servidor)
     - Para filtrar somente os endereços _IP_: `ip.addr == IP || ip.addr == IP` (sendo `IP`s, respectivamente, os IPs do cliente e servidor ou vice-versa)
 
@@ -606,7 +606,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 #### 4.3.4. Tamanho do Pacote
 
-- Há duas formas de visualizar o tamanho do pacote:
+- Há três formas de visualizar o tamanho do pacote:
     - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
         - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) / `Length` (UDP)  para o tamanho do cabeçalho do protocolo.
         - A carga útil está localizada no cabeçalho **Data** no campo `payload`.
