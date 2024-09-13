@@ -435,18 +435,20 @@ while ptime < 10:
         # Received time
         RTTa = time.time()
         # Display the server response as an output
-        print "Reply from " + address[0] + ": " + message       
+        print ("Reply from " + address[0] + ": " + message)       
         # Round trip time is the difference between sent and received time
-        print "RTT: " + str(RTTa - RTTb)
+        print ("RTT: " + str(RTTa - RTTb))
     except:
         # Server does not response
         # Assume the packet is lost
-        print "Request timed out."
+        print ("Request timed out.")
         continue
 
 # Close the client socket
 clientsocket.close()
 ```
+
+A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina cliente, e a mensagem a ser enviada é "Ping".
 
 <details>
 
@@ -506,10 +508,10 @@ while ptime < 10:
         clientsocket.sendto(data, (host, port))
         message, address = clientsocket.recvfrom(1024)  
         RTTa = time.time()
-        print "Reply from " + address[0] + ": " + message       
-        print "RTT: " + str(RTTa - RTTb)
+        print ("Reply from " + address[0] + ": " + message)    
+        print ("RTT: " + str(RTTa - RTTb))
     except:
-        print "Request timed out."
+        print ("Request timed out.")
         continue
 ```
 
@@ -522,16 +524,69 @@ while ptime < 10:
     - `message`: uma variável que armazena os dados recebidos.
     - `address`: o endereço IP e a porta do servidor.
 - `RTTa = time.time()`: registra o tempo atual após o recebimento da resposta (tempo de recebimento).
-- `print "Reply from " + address[0] + ": " + message`: imprime a resposta recebida e o endereço do servidor.
+- `print ("Reply from " + address[0] + ": " + message)`: imprime a resposta recebida e o endereço do servidor.
     - Usa-se operador `+` para concatenar _strings_.
-- `print "RTT: " + str(RTTa - RTTb)`: calcula e imprime o tempo de ida e volta (_RTT_) como a diferença entre o tempo de recebimento e o tempo de envio.
+- `print ("RTT: " + str(RTTa - RTTb))`: calcula e imprime o tempo de ida e volta (_RTT_) como a diferença entre o tempo de recebimento e o tempo de envio.
     - Usa-se operador `+` e função `str()` para que seja possível concatenar o valor em _strings_, deixando tudo no mesmo formato.
 - `except`: captura exceções se ocorrer um erro, como o _timeout_ de leitura.
-- `print "Request timed out."`: imprime uma mensagem se a resposta do servidor não for recebida dentro do tempo limite definido.
+- `print ("Request timed out.")`: imprime uma mensagem se a resposta do servidor não for recebida dentro do tempo limite definido.
 - `continue`: continua o _loop_ para enviar o próximo pacote de _ping_.
 - `clientsocket.close()`: encerra a comunicação com o cliente.
 
 </details>
+
+#### UDPPingerServer.py (Máquina Virtual - Kali Linux)
+
+```python
+import sys, time
+from socket import *
+
+# Get the server hostname and port as command line arguments
+argv = sys.argv
+host = argv[1]
+port = argv[2]
+timeout = 1 # in second
+ 
+# Create UDP server socket
+# Note the use of SOCK_DGRAM for UDP datagram packet
+serversocket = socket(AF_INET, SOCK_DGRAM)
+# Set socket timeout as 1 second
+serversocket.settimeout(timeout)
+# Command line argument is a string, change the port into integer
+port = int(port)  
+# Sequence number of the ping message
+ptime = 0  
+
+# Ping for 10 times
+while ptime < 10: 
+    ptime += 1
+    # Format the message to be sent
+    data = "Pong " + str(ptime) + " " + time.asctime()
+
+    try:
+        # Sent time
+        RTTb = time.time()
+        # Send the UDP packet with the pong message
+        serversocket.sendto(data,(host, port))
+        # Receive the client response
+        message, address = serversocket.recvfrom(1024)  
+        # Received time
+        RTTa = time.time()
+        # Display the client response as an output
+        print ("Reply from " + address[0] + ": " + message)       
+        # Round trip time is the difference between sent and received time
+        print ("RTT: " + str(RTTa - RTTb))
+    except:
+        # Client does not response
+        # Assume the packet is lost
+        print ("Request timed out.")
+        continue
+
+# Close the client socket
+clientsocket.close()
+```
+
+A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina servidor, e a mensagem a ser enviada é "Pong".
 
 ### 2.2. Compartilhamento de Arquivos
 
@@ -552,8 +607,8 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 1. Abra a pasta onde os _scripts_ foram salvos, copie seu caminho ("URL" do local).
 2. Abra o _terminal_ (`cmd`) e direcione-o para a pasta com: `cd {caminho-da-pasta}`
 3. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
-   - No caso do _Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python UDPPingerClient.py {HOSTIP} {HOSTPORT}`
-   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o IP (`host = argv[1]`) seguido da porta (`port = argv[2]`).
+   - No caso dos _scripts Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python {nome-do-arquivo}.py {HOSTIP} {HOSTPORT}`
+   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o endereço IP de destino (`host = argv[1]`) seguido da porta (`port = argv[2]`).
 
 **Na máquina virtual (Kali Linux):**
 
@@ -569,7 +624,15 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ### 4.1. Captura de Tráfego
 
-**Na máquina local:**
+**Na máquina local (Windows):**
+
+1. Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Domínio` e, na aba à direita, clique em `Habilitar Regra`.
+2. Abra o **Wireshark** e selecione a interface de rede correspondente à sua conexão.
+3. Inicie a captura clicando no ícone de _iniciar captura_.
+4. Execute os _scripts_ de cliente e servidor (primeiro inicie o servidor, depois o cliente).
+5. Pare a captura após a comunicação finalizar.
+   
+**Na máquina virtual (Kali Linux):**
 
 1. Abra o **Wireshark** e selecione a interface de rede correspondente à sua conexão.
 2. Inicie a captura clicando no ícone de _iniciar captura_.
