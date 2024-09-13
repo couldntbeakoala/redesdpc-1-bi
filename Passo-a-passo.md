@@ -1,3 +1,7 @@
+# MANUTENÇÃO SCRIPTS PINGERS
+
+---
+
 # Passo a Passo (Redes de Computadores - Atividade do 1º Bimestre)
 
 Este `Markdown` tem como objetivo guiar o usuário através de uma apresentação passo a passo para completar a atividade passada pelo professor Matheus. Serão usados os códigos que o mesmo disponibilizou via aplicativo **Multivix**.
@@ -400,52 +404,7 @@ clientSocket.close()
 #### UDPPingerClient.py (Máquina Virtual - Kali Linux)
 
 ```python
-import sys, time
-from socket import *
 
-# Get the server hostname and port as command line arguments
-argv = sys.argv
-host = argv[1]
-port = argv[2]
-timeout = 1 # in second
- 
-# Create UDP client socket
-# Note the use of SOCK_DGRAM for UDP datagram packet
-clientsocket = socket(AF_INET, SOCK_DGRAM)
-# Set socket timeout as 1 second
-clientsocket.settimeout(timeout)
-# Command line argument is a string, change the port into integer
-port = int(port)  
-# Sequence number of the ping message
-ptime = 0  
-
-# Ping for 10 times
-while ptime < 10: 
-    ptime += 1
-    # Format the message to be sent
-    data = "Ping " + str(ptime) + " " + time.asctime()
-
-    try:
-        # Sent time
-        RTTb = time.time()
-        # Send the UDP packet with the ping message
-        clientsocket.sendto(data,(host, port))
-        # Receive the server response
-        message, address = clientsocket.recvfrom(1024)  
-        # Received time
-        RTTa = time.time()
-        # Display the server response as an output
-        print ("Reply from " + address[0] + ": " + message)       
-        # Round trip time is the difference between sent and received time
-        print ("RTT: " + str(RTTa - RTTb))
-    except:
-        # Server does not response
-        # Assume the packet is lost
-        print ("Request timed out.")
-        continue
-
-# Close the client socket
-serversocket.close()
 ```
 
 A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina cliente, e a mensagem a ser enviada é "Ping".
@@ -471,26 +430,10 @@ from socket import *
 <summary>Configuração, tempo e conexão</summary>
 
 ```python
-argv = sys.argv                      
-host = argv[1]
-port = argv[2]
-timeout = 1
-clientsocket = socket(AF_INET, SOCK_DGRAM)
-clientsocket.settimeout(timeout)
-port = int(port)
-ptime = 0
+
 ```
 
-- `argv = sys.argv`:
-    - Obtém a lista de argumentos passados para o _script_ na linha de comando.
-    - `sys.argv[0]` é o nome do _script_, e os argumentos seguintes são os fornecidos pelo usuário.
-- `host = argv[1]`: a variável `host` recebe o primeiro argumento da linha de comando, que representa o nome ou IP do servidor.
-- `port = argv[2]`: a variável `port` recebe o segundo argumento da linha de comando, que representa a porta do servidor.
-- `timeout = 1`: define o tempo limite (_timeout_) para o _socket_ como `1` segundo, no caso.
-- `clientsocket = socket(AF_INET, SOCK_DGRAM)`: cria-se um socket em que `AF_INET` indica que este _socket_ utilizará o protocolo IPv4; *SOCK_DGRAM* indica que utilizará o protocolo de transporte _UDP_.
-- `clientsocket.settimeout(timeout)`: define o tempo limite de 1 segundo para operações de leitura no socket.
-- `port = int(port)`: porque o argumento da linha de comando é uma _string_, converte o valor da porta de _string_ para inteiro (_integer_).
-- `ptime = 0`: inicializa a variável `ptime`, que será usada para contar o número de pacotes de _ping_ enviados.
+
 
 </details>
 
@@ -499,41 +442,10 @@ ptime = 0
 <summary>Comunicação, tempo e encerramento</summary>
 
 ```python
-while ptime < 10: 
-    ptime += 1
-    data = "Ping " + str(ptime) + " " + time.asctime()
-    
-    try:
-        RTTb = time.time()
-        clientsocket.sendto(data, (host, port))
-        message, address = clientsocket.recvfrom(1024)  
-        RTTa = time.time()
-        print ("Reply from " + address[0] + ": " + message)    
-        print ("RTT: " + str(RTTa - RTTb))
-    except:
-        print ("Request timed out.")
-        continue
+
 ```
 
-- `while ptime < 10:`: inicia um _loop_ que executa enquanto `ptime` for menor que 10, enviando 10 pacotes de ping.
-- `ptime += 1`: incrementa o contador `ptime` a cada iteração do _loop_.
-- `data = "Ping " + str(ptime) + " " + time.asctime()`: cria a mensagem de _ping_ com o número da sequência `ptime` e o horário atual.
-- `RTTb = time.time()`: registra o tempo atual antes do envio do pacote (tempo de envio).
-- `clientsocket.sendto(data, (host, port))`: envia o pacote de _ping_ para o servidor no endereço e porta especificados.
-- `clientsocket.recvfrom(1024)`: recebe até 1024 _bytes_ (definidos como parâmetro para tamanho do _buffer_) e retorna:
-    - `message`: uma variável que armazena os dados recebidos.
-    - `address`: o endereço IP e a porta do servidor.
-- `RTTa = time.time()`: registra o tempo atual após o recebimento da resposta (tempo de recebimento).
-- `print ("Reply from " + address[0] + ": " + message)`: imprime a resposta recebida e o endereço do servidor.
-    - Usa-se operador `+` para concatenar _strings_.
-- `print ("RTT: " + str(RTTa - RTTb))`: calcula e imprime o tempo de ida e volta (_RTT_) como a diferença entre o tempo de recebimento e o tempo de envio.
-    - Usa-se operador `+` e função `str()` para que seja possível concatenar o valor em _strings_, deixando tudo no mesmo formato.
-- `except`: captura exceções se ocorrer um erro, como o _timeout_ de leitura.
-- `print ("Request timed out.")`: imprime uma mensagem se a resposta do servidor não for recebida dentro do tempo limite definido.
-- `continue`: continua o _loop_ para enviar o próximo pacote de _ping_.
-- `clientsocket.close()`: encerra a comunicação com o cliente.
 
-</details>
 
 #### UDPPingerServer.py (Máquina Virtual - Kali Linux)
 
@@ -541,49 +453,7 @@ while ptime < 10:
 import sys, time
 from socket import *
 
-# Get the server hostname and port as command line arguments
-argv = sys.argv
-host = argv[1]
-port = argv[2]
-timeout = 1 # in second
- 
-# Create UDP server socket
-# Note the use of SOCK_DGRAM for UDP datagram packet
-serversocket = socket(AF_INET, SOCK_DGRAM)
-# Set socket timeout as 1 second
-serversocket.settimeout(timeout)
-# Command line argument is a string, change the port into integer
-port = int(port)  
-# Sequence number of the ping message
-ptime = 0  
 
-# Ping for 10 times
-while ptime < 10: 
-    ptime += 1
-    # Format the message to be sent
-    data = "Pong " + str(ptime) + " " + time.asctime()
-
-    try:
-        # Sent time
-        RTTb = time.time()
-        # Send the UDP packet with the pong message
-        serversocket.sendto(data,(host, port))
-        # Receive the client response
-        message, address = serversocket.recvfrom(1024)  
-        # Received time
-        RTTa = time.time()
-        # Display the client response as an output
-        print ("Reply from " + address[0] + ": " + message)       
-        # Round trip time is the difference between sent and received time
-        print ("RTT: " + str(RTTa - RTTb))
-    except:
-        # Client does not response
-        # Assume the packet is lost
-        print ("Request timed out.")
-        continue
-
-# Close the client socket
-clientsocket.close()
 ```
 
 A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina servidor, e a mensagem a ser enviada é "Pong".
