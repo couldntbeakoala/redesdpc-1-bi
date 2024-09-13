@@ -445,7 +445,7 @@ while ptime < 10:
         continue
 
 # Close the client socket
-clientsocket.close()
+serversocket.close()
 ```
 
 A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina cliente, e a mensagem a ser enviada é "Ping".
