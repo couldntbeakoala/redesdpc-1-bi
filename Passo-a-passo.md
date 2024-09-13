@@ -624,13 +624,24 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ### 4.1. Captura de Tráfego
 
+Primeiramente, copie o endereço IP das máquinas que serão servidor e cliente:
+   **Windows**: Abra o _terminal_ e digite: `ipconfig`, em seguida, procure a interface de rede correspondente à sua conexão e guarde o IP no campo `IPv4`.
+   **Kali Linux**: Abra o _terminal_ e digite: `ip a`, em seguida, procure a interface de rede correspondente à sua conexão (`eth0`) e guarde o IP no campo `IPv4`,.
+
+Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
+    O **Windows** testará a conexão 4 vezes, o **Kali Linux** continuará até que seja parado manualmente com a sequência de teclas: `CTRL + C`.
+    Caso o processo não esteja sendo realizado, isto é, esteja parado na tentativa de _ping_..., ou, no caso do **Windows**, esteja retornando perda de pacotes `100%`
+    ```Kali Linux
+    PING 192.168.0.0 (192.168.0.0) 0(0) bytes of data
+    ```
+    Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Particular, Público` e, na aba à direita, clique em `Habilitar Regra`.
+
 **Na máquina local (Windows):**
 
-1. Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Domínio` e, na aba à direita, clique em `Habilitar Regra`.
-2. Abra o **Wireshark** e selecione a interface de rede correspondente à sua conexão.
-3. Inicie a captura clicando no ícone de _iniciar captura_.
-4. Execute os _scripts_ de cliente e servidor (primeiro inicie o servidor, depois o cliente).
-5. Pare a captura após a comunicação finalizar.
+1. Abra o **Wireshark** e selecione a interface de rede correspondente à sua conexão.
+2. Inicie a captura clicando no ícone de _iniciar captura_.
+3. Execute os _scripts_ de cliente e servidor (primeiro inicie o servidor, depois o cliente).
+4. Pare a captura após a comunicação finalizar.
    
 **Na máquina virtual (Kali Linux):**
 
