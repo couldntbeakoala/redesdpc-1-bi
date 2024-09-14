@@ -1,7 +1,3 @@
-# MANUTENÇÃO SCRIPTS PINGERS
-
----
-
 # Passo a Passo (Redes de Computadores - Atividade do 1º Bimestre)
 
 Este `Markdown` tem como objetivo guiar o usuário através de uma apresentação passo a passo para completar a atividade passada pelo professor Matheus. Serão usados os códigos que o mesmo disponibilizou via aplicativo **Multivix**.
@@ -530,13 +526,13 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ## 3. Execução dos Scripts
 
+> Realize em conjunto à próxima seção (**Análise de Pacotes com Wireshark**) para possíveis tratamento de erros no momento da execução dos _scripts_, principalmente se utilizando **Windows**.
+
 **Na máquina local (Windows):**
 
 1. Abra a pasta onde os _scripts_ foram salvos, copie seu caminho ("URL" do local).
 2. Abra o _terminal_ (`cmd`) e direcione-o para a pasta com: `cd {caminho-da-pasta}`
 3. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
-   - No caso dos _scripts Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python {nome-do-arquivo}.py {HOSTIP} {HOSTPORT}`
-   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o endereço IP de destino (`host = argv[1]`) seguido da porta (`port = argv[2]`).
 
 **Na máquina virtual (Kali Linux):**
 
@@ -561,6 +557,8 @@ Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
     PING 192.168.0.0 (192.168.0.0) 0(0) bytes of data
     ```
     Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Particular, Público` e, na aba à direita, clique em `Habilitar Regra`.
+    Se o algum _script_ não executar (estar em espera ou considerar pacote perdido), no mesmo campo do _Firewall_, adicione duas novas regras de entradas (`Nova regra...`, aba direita), _tanto para **TCP** quanto para **UDP**_ selecione `Porta` como tipo de regra, em seguida o respectivo protocolo e, em `Portas específicas`, adicione a porta escolhida para o servidor.
+    Se o problema persistir, entre em contato.
 
 **Na máquina local (Windows):**
 
