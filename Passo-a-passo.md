@@ -557,19 +557,20 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 ### 4.1. Captura de Tráfego
 
-Primeiramente, copie o endereço IP das máquinas que serão servidor e cliente:
-   **Windows**: Abra o _terminal_ e digite: `ipconfig`, em seguida, procure a interface de rede correspondente à sua conexão e guarde o IP no campo `IPv4`.
-   **Kali Linux**: Abra o _terminal_ e digite: `ip a`, em seguida, procure a interface de rede correspondente à sua conexão (`eth0`) e guarde o IP no campo `IPv4`,.
-
-Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
-    O **Windows** testará a conexão 4 vezes, o **Kali Linux** continuará até que seja parado manualmente com a sequência de teclas: `CTRL + C`.
-    Caso o processo não esteja sendo realizado, isto é, esteja parado na tentativa de _ping_..., ou, no caso do **Windows**, esteja retornando perda de pacotes `100%`
+- Primeiramente, copie o endereço IP das máquinas que serão servidor e cliente:
+   - **Windows**: Abra o _terminal_ e digite: `ipconfig`, em seguida, procure a interface de rede correspondente à sua conexão e guarde o IP no campo `IPv4`.
+   - **Kali Linux**: Abra o _terminal_ e digite: `ip a`, em seguida, procure a interface de rede correspondente à sua conexão (`eth0`) e guarde o IP no campo `IPv4`,.
+     
+- Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
+    - O **Windows** testará a conexão 4 vezes, o **Kali Linux** continuará até que seja parado manualmente com a sequência de teclas: `CTRL + C`.
+    Caso o processo não esteja sendo realizado, isto é, esteja parado na tentativa de _ping_...
     ```Kali Linux
     PING 192.168.0.0 (192.168.0.0) 0(0) bytes of data
     ```
-    Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Particular, Público` e, na aba à direita, clique em `Habilitar Regra`.
-    Se o algum _script_ não executar (estar em espera ou considerar pacote perdido), no mesmo campo do _Firewall_, adicione duas novas regras de entradas (`Nova regra...`, aba direita), _tanto para **TCP** quanto para **UDP**_ selecione `Porta` como tipo de regra, em seguida o respectivo protocolo e, em `Portas específicas`, adicione a porta escolhida para o servidor.
-    Se o problema persistir, entre em contato.
+    - ...ou, no caso do **Windows**, esteja retornando perda de pacotes `100%`
+    - Abra o **Windows Defender Firewall**, no campo **Regras de Entrada**, pesquise por `Compartilhamento de Arquivo e Impressora (Solicitação de Eco - ICMPv4-In)` do Perfil `Particular, Público` e, na aba à direita, clique em `Habilitar Regra`.
+        - Se o algum _script_ não executar (estar em espera ou considerar pacote perdido), no mesmo campo do _Firewall_, adicione duas novas regras de entradas (`Nova regra...`, aba direita), _tanto para **TCP** quanto para **UDP**_ selecione `Porta` como tipo de regra, em seguida o respectivo protocolo e, em `Portas específicas`, adicione a porta escolhida para o servidor.
+        - Se o problema persistir, entre em contato.
 
 **Na máquina local (Windows):**
 
