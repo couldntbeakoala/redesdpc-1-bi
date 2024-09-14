@@ -631,6 +631,6 @@ Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
 ## Referências
 - [Instalação do VSCode](https://code.visualstudio.com/docs/setup/setup-overview)
 - [Instalação do Python](https://www.python.org/downloads/)
-    - [Programação de Soquetes (Python)](https://docs.python.org/pt-br/3/howto/sockets.html) & [Biblioteca Socket (Python)](https://docs.python.org/3/library/socket.html)
+    - [Programação de Soquetes (Python)](https://docs.python.org/pt-br/3/howto/sockets.html) & [Biblioteca Socket (Python)](https://docs.python.org/3/library/socket.html) & [Programando Soquetes (Python)](https://realpython.com/python-sockets/)
 - [Instalação do VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [Wireshark: Como usar e filtrar pacotes](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html)
