@@ -468,7 +468,18 @@ import socket
 <summary>Comunicação, tempo e encerramento</summary>
 
 ```python
+        try:
+            dados, endereco = c.recvfrom(1024) # Recebe os dados passados pelo servidor
+            fim = time.time() # Registra o tempo de chagada da resposta
 
+            rtt = (fim - inicio) * 1000 # Calcula o tempo de ida e volta (RTT) em milissegundos
+
+            print(f"Ping {i + 1} - Recebido do servidor: {dados.decode()}")
+            print(f"RTT: {rtt:.2f} ms")
+        except socket.timeout:
+            print(f"Ping {i + 1}: Timeout")
+        
+        time.sleep(1) # Aguarda 1 segundo entre as mensagens
 ```
 
 - `try:`: inicia um bloco que tenta executar um bloco e captura exceções para tratamento de erro.
@@ -483,7 +494,7 @@ import socket
     - `print(f"Ping {i + 1}: Timeout")`: Exibe uma mensagem de _timeout_ se não houver resposta do servidor.
 - `time.sleep(1)`: faz o programa esperar 1 segundo, no caso, antes de enviar a próxima mensagem.
 
-
+</details>
 
 #### UDPPingerServer.py (Máquina Virtual - Kali Linux)
 
