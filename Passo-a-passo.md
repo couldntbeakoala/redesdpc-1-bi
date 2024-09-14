@@ -5,6 +5,7 @@
 # Passo a Passo (Redes de Computadores - Atividade do 1º Bimestre)
 
 Este `Markdown` tem como objetivo guiar o usuário através de uma apresentação passo a passo para completar a atividade passada pelo professor Matheus. Serão usados os códigos que o mesmo disponibilizou via aplicativo **Multivix**.
+- Com exceção dos _pingers_.
 
 ---
 
@@ -404,24 +405,48 @@ clientSocket.close()
 #### UDPPingerClient.py (Máquina Virtual - Kali Linux)
 
 ```python
+import time
+import socket
+
+# Configurações do cliente
+HOST = "HOSTIP" # Endereço do servidor
+PORT = PORT # Porta que o servidor está usando
+
+# Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as c:
+    mensagem = "PING"
+    for i in range(10): # Para enviar 10 mensagens
+        inicio = time.time() # Registra o tempo de início do envio da mensagem
+        c.sendto(mensagem.encode(), (HOST, PORT)) # Envia a mensagem ao servidor
+        
+        try:
+            dados, endereco = c.recvfrom(1024) # Recebe os dados passados pelo servidor
+            fim = time.time() # Registra o tempo de chagada da resposta
+
+            rtt = (fim - inicio) * 1000 # Calcula o tempo de ida e volta (RTT) em milissegundos
+
+            print(f"Ping {i + 1} - Recebido do servidor: {dados.decode()}")
+            print(f"RTT: {rtt:.2f} ms")
+        except socket.timeout:
+            print(f"Ping {i + 1}: Timeout")
+        
+        time.sleep(1) # Aguarda 1 segundo entre as mensagens
 
 ```
 
-A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina cliente, e a mensagem a ser enviada é "Ping".
+A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina cliente, e a mensagem a ser enviada é "PING" e no caso do cliente, calcula e exibe o tempo de ida e volta (_RTT_).
 
 <details>
 
 <summary>Importação de biblioteca</summary>
 
 ```python
-import sys, time
-from socket import *
+import time
+import socket
 ```
 
-- `import sys, time`:
-    - `sys` é um módulo que fornece acesso a algumas variáveis e funções específicas do sistema, como argumentos da linha de comando.
-    - `time` é um módulo que fornece funções relacionadas ao tempo, como medir intervalos de tempo e obter o tempo atual.
-- `from socket import *`: importa todas as funcionalidades do módulo `socket`, que é usado para criar e manipular conexões de rede.
+- `import time`: é um módulo que fornece funções relacionadas ao tempo, como medir intervalos de tempo e obter o tempo atual.
+- `import socket`: é um módulo usado para criar e manipular conexões de rede.
 
 </details>
 
@@ -430,10 +455,15 @@ from socket import *
 <summary>Configuração, tempo e conexão</summary>
 
 ```python
-
+    mensagem = "PING"
+    for i in range(10): # Para enviar 10 mensagens
+        inicio = time.time() # Registra o tempo de início do envio da mensagem
+        c.sendto(mensagem.encode(), (HOST, PORT)) # Envia a mensagem ao servidor
 ```
 
-
+- `mensagem = "PING"`: define a mensagem que será enviada ao servidor.
+- `for i in range(10):`: inicia um loop para enviar a mensagem 10 vezes.
+- `inicio = time.time()`: registra o horário em que o envio da mensagem começa.
 
 </details>
 
@@ -445,18 +475,46 @@ from socket import *
 
 ```
 
+- `try:`: inicia um bloco que tenta executar um bloco e captura exceções para tratamento de erro.
+    - `c.recvfrom(1024)`**: recebe até 1024 _bytes_ (definidos como parâmetro para tamanho do _buffer_) e retorna:
+        - `dados`: uma variável que armazena os dados recebidos.
+        - `endereco`: o endereço IP e a porta do servidor.
+    - `fim = time.time()`: registra o horário em que a resposta foi recebida.
+    - `rtt = (fim - inicio) * 1000`: calcula o tempo de ida e volta (_RTT_) da mensagem em milissegundos (`* 1000`).
+    - `print(f"Ping {i + 1} - Recebido do servidor: {dados.decode()}")`: Exibe a resposta recebida do servidor, decodificando os bytes de volta para uma string.
+    - `print(f"RTT: {rtt:.2f} ms")`: exibe o tempo de ida e volta (_RTT_) calculado com duas casas decimais.
+- `except socket.timeout:`: captura exceções de _timeout_ se o servidor não responder dentro do tempo padrão.
+    - `print(f"Ping {i + 1}: Timeout")`: Exibe uma mensagem de _timeout_ se não houver resposta do servidor.
+- `time.sleep(1)`: faz o programa esperar 1 segundo, no caso, antes de enviar a próxima mensagem.
+
 
 
 #### UDPPingerServer.py (Máquina Virtual - Kali Linux)
 
 ```python
-import sys, time
-from socket import *
+import socket
 
+#import socket
 
+# Configurações do servidor
+HOST = "0.0.0.0" # Endereço para aceitar todos os servidores disponíveis
+PORT = PORT # Porta que o servidor usará (destino)
+
+# Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+    s.bind() # Associa o socket ao endereço e porta especificados
+    print(f"Servidor (UDP) escutando em {HOST}:{PORT}")
+
+    while True:
+        dados, endereco = s.recvfrom(1024) # Recebe os dados passados pelo cliente
+        print(f"Recebido: {dados.decode()} de {endereco}")
+        mensagem = dados.decode()
+        if mensagem == "PING":
+            resposta = "PONG"
+            s.sendto(resposta.encode(), endereco)
 ```
 
-A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina servidor, e a mensagem a ser enviada é "Pong".
+A diferença entre ambos os _scripts_ `UDPPinger` é somente que os nomes referenciam que deve ser executado, no caso, pela máquina servidor, e a mensagem a ser enviada é "PONG" e no caso do servidor, não há a necessidade de calcular e exibir o tempo de ida e volta (_RTT_).
 
 ### 2.2. Compartilhamento de Arquivos
 
@@ -485,8 +543,6 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 1. Abra a pasta onde os _scripts_ foram salvos.
 2. Clique com o botão direito em um espaço vazio dentro da pasta e selecione `Open Terminal Here`.
 2. Para executar os _scripts Python_, digite: `python {nome-do-arquivo}.py`
-   - No caso do _Pinger_, passe os argumentos `HOSTIP`, em seguida, `HOSTPORT`: `python UDPPingerClient.py {HOSTIP} {HOSTPORT}`
-   > Porque seriam os argumentos que o sistema guardaria: primeiro argumento referenciado, no código, como o IP (`host = argv[1]`) seguido da porta (`port = argv[2]`).
 
 ---
 
