@@ -15,6 +15,7 @@ Na pasta `Códigos`, há os scripts fornecidos pelo professor:
 - **`UDPServer.py`**: Servidor UDP que recebe uma mensagem, converte para letras maiúsculas e envia de volta ao cliente.
 - **`UDPClient.py`**: Cliente UDP que envia uma mensagem para o servidor e imprime a resposta recebida, como um eco.
 - **`UDPPingerClient.py`**: Cliente UDP para 'ping' que envia mensagens de 'ping' para o servidor e mede o tempo de ida e volta (RTT) para cada resposta.
+- **`UDPPingerServer.py`**: Servidor UDP para 'ping' que envia mensagens de 'pong' para o cliente.
 
 ## Estrutura
 
