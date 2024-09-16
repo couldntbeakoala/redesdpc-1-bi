@@ -599,7 +599,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 - Para filtrar a captura a fim de visualizar somente o que interessa, vá para o campo de filtro e digite:
     - Para filtrar somente protocolos _DNS_: `dns`
-          - Consulta e resposta: vá ao campo **Domain Name System (query)** (consulta) / **Domain Name System (response)** (resposta), no campo `Queries`, em seguida terá um campo neste formato: `{URL do site}: type {tipo}, class {classe}`.
+      - Consulta e resposta: vá ao campo **Domain Name System (query)** (consulta) / **Domain Name System (response)** (resposta), no campo `Queries`, em seguida terá um campo neste formato: `{URL do site}: type {tipo}, class {classe}`.
     - Para filtrar somente protocolos _TCP_ e _UDP_ na porta especificda: `tcp.port == PORT || udp.port == PORT` (sendo `PORT` a porta do servidor)
     - Para filtrar somente os endereços _IP_: `ip.addr == IP || ip.addr == IP` (sendo `IP`s, respectivamente, os IPs do cliente e servidor ou vice-versa)
 
