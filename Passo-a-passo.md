@@ -409,7 +409,7 @@ HOST = "HOSTIP" # Endereço do servidor
 PORT = PORT # Porta que o servidor está usando
 
 # Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as c:
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as c:
     mensagem = "PING"
     for i in range(10): # Para enviar 10 mensagens
         inicio = time.time() # Registra o tempo de início do envio da mensagem
@@ -451,12 +451,21 @@ import socket
 <summary>Configuração, tempo e conexão</summary>
 
 ```python
+# Configurações do cliente
+HOST = "HOSTIP" # Endereço do servidor
+PORT = PORT # Porta que o servidor está usando
+
+# Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as c:
     mensagem = "PING"
     for i in range(10): # Para enviar 10 mensagens
         inicio = time.time() # Registra o tempo de início do envio da mensagem
         c.sendto(mensagem.encode(), (HOST, PORT)) # Envia a mensagem ao servidor
 ```
 
+- `HOST`: armazena o endereço IP ou nome do _host_ do servidor.
+- `PORT`: armazena a porta do servidor.
+- `with socket.socket(AF_INET, SOCK_DGRAM) as c`: cria-se um socket em que `AF_INET` indica que este _socket_ utilizará o protocolo IPv4; *SOCK_DGRAM* indica que utilizará o protocolo de transporte _UDP_; e pede para usar caractere `c`, no caso, como referência ao comando para realizar o bloco de código seguinte.
 - `mensagem = "PING"`: define a mensagem que será enviada ao servidor.
 - `for i in range(10):`: inicia um loop para enviar a mensagem 10 vezes.
 - `inicio = time.time()`: registra o horário em que o envio da mensagem começa.
