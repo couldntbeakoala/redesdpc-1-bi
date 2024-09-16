@@ -6,7 +6,7 @@ HOST = "HOSTIP" # Endereço do servidor
 PORT = PORT # Porta que o servidor está usando
 
 # Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as c:
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as c:
     mensagem = "PING"
     for i in range(10): # Para enviar 10 mensagens
         inicio = time.time() # Registra o tempo de início do envio da mensagem
