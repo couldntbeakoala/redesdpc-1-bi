@@ -630,12 +630,13 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 #### 4.3.4. Tamanho do Pacote
 
 - Há três formas de visualizar o tamanho do pacote:
-    - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do TCP) / `Length` (acima de `Checksum`, no caso do UDP)) com a carga útil (`payload`), em _bytes_:
-        - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) / `Length` (UDP)  para o tamanho do cabeçalho do protocolo.
-        - A carga útil está localizada no cabeçalho **Data** no campo `payload`.
-    - Pode ser calculado pela _subtração_ do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length` (TCP) / `Length` (UDP), em _bytes_:
+    - Pode ser diretamente visualizado no cabeçalho do protocolo **User Datagram Protocol**, no caso do **TCP**, não há um campo para o total do pacote, **UDP**, no campo `Length`.
+    - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do **TCP**) / _soma_ do tamanho _fixo_ de _8 bytes_ (no caso do **UDP**)) com a carga útil (`payload`), em _bytes_:
+        - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) (para UDP são _8 bytes fixo_)  para o tamanho do cabeçalho do protocolo.
+        - A carga útil está localizada no cabeçalho **Data** no campo `payload` ou logo acima, com a sigla do protocolo em seu nome.
+    - No caso do **TCP**, pode ser calculado pela _subtração_ do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length`, em _bytes_, no caso do **UDP**, a _subtração_ de tal valor com o valor da carga útil do protocolo (`UDP payload`):
         - Vá ao cabeçalho **Internet Protocol Version 4**, campo `Total length` para o tamanho total.
-        - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length` (TCP) / `Length` (UDP) no cabeçalho respectivo do protocolo.
+        - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length` (TCP) / `UDP payload` (UDP) no cabeçalho respectivo do protocolo.
       Isto porque é em segmento, dos dados (`payload`) ao fim do pacote completo (`Frame`), o comprimento de cada camada é a soma do comprimento da anterior com o seu próprio.
 
 ## Referências
