@@ -518,7 +518,7 @@ PORT = PORT # Porta que o servidor usará (destino)
 
 # Criação do socket IPv4 (AF_INET), UDP (SOCK_DGRAM):
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
-    s.bind() # Associa o socket ao endereço e porta especificados
+    s.bind((HOST, PORT)) # Associa o socket ao endereço e porta especificados
     print(f"Servidor (UDP) escutando em {HOST}:{PORT}")
 
     while True:
