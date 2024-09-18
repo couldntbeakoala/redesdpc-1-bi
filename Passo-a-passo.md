@@ -568,7 +568,7 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 - Primeiramente, copie o endereço IP das máquinas que serão servidor e cliente:
    - **Windows**: Abra o _terminal_ e digite: `ipconfig`, em seguida, procure a interface de rede correspondente à sua conexão e guarde o IP no campo `IPv4`.
-   - **Kali Linux**: Abra o _terminal_ e digite: `ip a`, em seguida, procure a interface de rede correspondente à sua conexão (`eth0`) e guarde o IP no campo `IPv4`,.
+   - **Kali Linux**: Abra o _terminal_ e digite: `ip a`, em seguida, procure a interface de rede correspondente à sua conexão (`eth0`) e guarde o IP no campo `IPv4`.
      
 - Em ambas as máquinas, no _terminal_, digite: `ping {IP-da-outra-máquina}`
     - O **Windows** testará a conexão 4 vezes, o **Kali Linux** continuará até que seja parado manualmente com a sequência de teclas: `CTRL + C`.
@@ -629,14 +629,11 @@ Para facilitar o processo, adicione um diretório compartilhado (em que ambas as
 
 #### 4.3.4. Tamanho do Pacote
 
-- Há três formas de visualizar o tamanho do pacote:
-    - Pode ser diretamente visualizado no cabeçalho do protocolo **User Datagram Protocol**, no caso do **TCP**, não há um campo para o total do pacote, **UDP**, no campo `Length`.
-    - Pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` (acima de `Flags`, no caso do **TCP**) / _soma_ do tamanho _fixo_ de _8 bytes_ (no caso do **UDP**)) com a carga útil (`payload`), em _bytes_:
-        - Vá ao cabeçalho **Transmission Control Protocol**/**User Datagram Protocol**, campo `Header length` (TCP) (para UDP são _8 bytes fixo_)  para o tamanho do cabeçalho do protocolo.
-        - A carga útil está localizada no cabeçalho **Data** no campo `payload` ou logo acima, com a sigla do protocolo em seu nome.
-    - No caso do **TCP**, pode ser calculado pela _subtração_ do tamanho do cabeçalho do IP (`Total length`) com o tamanho do cabeçalho do protocolo `Header length`, em _bytes_, no caso do **UDP**, a _subtração_ de tal valor com o valor da carga útil do protocolo (`UDP payload`):
-        - Vá ao cabeçalho **Internet Protocol Version 4**, campo `Total length` para o tamanho total.
-        - No mesmo cabeçalho, subtraia o valor de `Total length` com o campo `Header length` (TCP) / `UDP payload` (UDP) no cabeçalho respectivo do protocolo.
+- Há uma forma segura de visualizar o tamanho do protocolo TCP e duas para o UDP:
+    - No caso do **UDP**, pode ser diretamente visualizado no cabeçalho do protocolo, no campo `Length`.
+    - No caso de **ambos**, pode ser calculado pela _soma_ do tamanho do cabeçalho do protocolo (`Header length` para **TCP** ou do valor _fixo_ de _8 bytes_, para **UDP**) com a carga útil (`payload`), em _bytes_:
+        - Para o **TCP**, vá ao cabeçalho **Transmission Control Protocol**, campo `Header length` para o tamanho do cabeçalho do protocolo. Para o **UDP**, o tamanho do protocolo é um valor fixo de _8 bytes_.
+        - A carga útil está localizada no cabeçalho **Data** no campo `payload` ou logo acima, com a sigla do protocolo em seu nome: `{TCP/UDP} payload`.
       Isto porque é em segmento, dos dados (`payload`) ao fim do pacote completo (`Frame`), o comprimento de cada camada é a soma do comprimento da anterior com o seu próprio.
 
 ## Referências
